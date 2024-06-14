@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.RegisterMapper">
+    <resultMap id="RegisterResultMap" type="com.Ek0wraith.entity.Register">
+        <id column="registerNo" property="registerNo" jdbcType="INTEGER"></id>
+        <result column="courseNo" property="courseNo" jdbcType="INTEGER"></result>
+        <result column="courseName" property="courseName" jdbcType="VARCHAR"></result>
+        <result column="courseTime" property="courseTime" jdbcType="DATE"></result>
+        <result column="courseDuration" property="courseDuration" jdbcType="INTEGER"></result>
+        <result column="employeeNo" property="employeeNo" jdbcType="INTEGER"></result>
+        <result column="employeeName" property="employeeName" jdbcType="VARCHAR"></result>
+        <result column="employeePhone" property="employeePhone" jdbcType="VARCHAR"></result>
+        <result column="memberName" property="memberName" jdbcType="VARCHAR"></result>
+        <result column="memberNo" property="memberNo" jdbcType="INTEGER"></result>
+        <result column="memberPhone" property="memberPhone" jdbcType="VARCHAR"></result>
+
+    </resultMap>
+
+    <resultMap id="RegisterSumResultMap" type="com.Ek0wraith.entity.Common">
+        <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <select id="getAllRegister" resultMap="RegisterResultMap" resultType="com.Ek0wraith.entity.Register">
+        SELECT
+            registerNo,
+            courseName,
+            register.courseNo,
+            courseTime,
+            courseDuration,
+            course.coursePrice,
+            employee.employeeNo,
+            employeeName,
+            employeePhone,
+            member.memberNo,
+            memberName ,
+            memberPhone
+        FROM
+            register,
+            member,
+            course ,
+            employee
+        WHERE
+            register.memberNo = member.memberNo
+          AND course.courseNo = register.courseNo
+          AND employee.employeeNo = course.employeeNo
+            limit #{page},#{size}
+    </select>
+
+
+
+    <!--添加报名-->
+    <insert id="addRegister">
+        INSERT INTO register (courseNo,memberNo)
+        VALUES(#{courseNo},#{memberNo});
+    </insert>
+
+    <!--修改报名信息-->
+    <update id="updateRegister">
+        UPDATE employee SET courseNo=#{courseNo},memberNo=#{memberNo}
+        WHERE registerNo = #{registerNo}
+    </update>
+
+    <!--删除报名信息-->
+    <delete id="deleteRegister">
+        DELETE FROM register WHERE registerNo=#{registerNo};
+    </delete>
+
+    <!--查找会员表数据总条数-->
+    <select id="totalRegister" resultMap="RegisterSumResultMap" resultType="com.Ek0wraith.entity.Common">
+        Select COUNT(*) as dataTotal from register
+    </select>
+
+    <!-- 模糊查询-->
+    <select id="getByKeywordRegister" resultMap="RegisterResultMap"  resultType="com.Ek0wraith.entity.Register">
+        SELECT
+            registerNo,
+            courseName,
+            register.courseNo,
+            courseTime,
+            courseDuration,
+            course.coursePrice,
+            employee.employeeNo,
+            employeeName,
+            employeePhone,
+            member.memberNo,
+            memberName ,
+            memberPhone
+        FROM
+            register,
+            member,
+            course,
+            employee
+        WHERE
+            register.memberNo = member.memberNo
+          AND course.courseNo = register.courseNo
+          AND employee.employeeNo = course.employeeNo
+          AND ( courseName LIKE concat('%',#{keyWord},'%')
+            OR courseDuration LIKE concat('%',#{keyWord},'%')
+            OR employeeName LIKE concat('%',#{keyWord},'%')
+            OR memberName LIKE concat('%',#{keyWord},'%'))
+            limit #{page},#{size};
+    </select>
+
+    <!-- 模糊查询查找会员表数据总条数-->
+    <select id="totalRegisterFuzzy" resultMap="RegisterSumResultMap"  resultType="com.Ek0wraith.entity.Common">
+        select COUNT(*) as dataTotal
+        FROM
+            register,
+            member,
+            course,
+            employee
+        WHERE
+            register.memberNo = member.memberNo
+          AND course.courseNo = register.courseNo
+          AND employee.employeeNo = course.employeeNo
+          AND ( courseName LIKE concat('%',#{keyWord},'%')
+            OR courseDuration LIKE concat('%',#{keyWord},'%')
+            OR employeeName LIKE concat('%',#{keyWord},'%')
+            OR memberName LIKE concat('%',#{keyWord},'%') )
+            limit #{page},#{size};
+    </select>
+
+
+    <select id="getMemberByPhone" resultType="com.Ek0wraith.entity.Member">
+        SELECT * FROM member where memberPhone=#{memberPhone}
+    </select>
+
+    <!--检查是否已经选过该课程-->
+    <select id="checkRegister" resultType="com.Ek0wraith.entity.Register">
+        select * from register where courseNo = #{courseNo} and memberNo = #{memberNo}
+    </select>
+
+    <select id="getRegisterByMemberNo" resultType="com.Ek0wraith.entity.Register">
+        SELECT
+            registerNo,
+            courseName,
+            register.courseNo,
+            courseTime,
+            courseDuration,
+            employee.employeeNo,
+            employeeName,
+            employeePhone,
+            member.memberNo,
+            memberName ,
+            memberPhone
+        FROM
+            register,
+            member,
+            course ,
+            employee
+
+        WHERE
+            register.memberNo = member.memberNo
+          AND course.courseNo = register.courseNo
+          AND employee.employeeNo = course.employeeNo
+          AND register.memberNo = #{memberNo}
+    </select>
+
+    <!--获得单个用户购物总额-->
+    <select id="getTotalBuyByMemberNo" resultType="java.lang.Double">
+        SELECT
+            SUM(course.coursePrice)
+        FROM
+            register,
+            course
+        WHERE
+            register.memberNo = #{memberNo}
+          AND
+            register.courseNo = course.courseNo
+    </select>
+
+
+
+</mapper>
