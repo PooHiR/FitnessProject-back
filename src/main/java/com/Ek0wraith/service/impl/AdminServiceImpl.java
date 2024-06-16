@@ -1,6 +1,6 @@
 package com.Ek0wraith.service.impl;
 
-import com.Ek0wraith.entity.Admin;
+import com.Ek0wraith.pojo.Admin;
 import com.Ek0wraith.mapper.AdminMapper;
 import com.Ek0wraith.service.AdminService;
 import com.Ek0wraith.utils.JwtUtil;

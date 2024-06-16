@@ -1,8 +1,7 @@
 package com.Ek0wraith.service;
 
-import com.Ek0wraith.entity.Common;
-import com.Ek0wraith.entity.Member;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.Ek0wraith.pojo.Common;
+import com.Ek0wraith.pojo.Member;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

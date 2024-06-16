@@ -1,4 +1,4 @@
-package com.Ek0wraith.entity;
+package com.Ek0wraith.pojo;
 
 import cn.hutool.core.annotation.Alias;
 import com.fasterxml.jackson.annotation.JsonIgnore;

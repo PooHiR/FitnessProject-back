@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.Ek0wraith.mapper.RegisterMapper">
-    <resultMap id="RegisterResultMap" type="com.Ek0wraith.entity.Register">
+    <resultMap id="RegisterResultMap" type="com.Ek0wraith.pojo.Register">
         <id column="registerNo" property="registerNo" jdbcType="INTEGER"></id>
         <result column="courseNo" property="courseNo" jdbcType="INTEGER"></result>
         <result column="courseName" property="courseName" jdbcType="VARCHAR"></result>
@@ -19,11 +19,11 @@
 
     </resultMap>
 
-    <resultMap id="RegisterSumResultMap" type="com.Ek0wraith.entity.Common">
+    <resultMap id="RegisterSumResultMap" type="com.Ek0wraith.pojo.Common">
         <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
     </resultMap>
 
-    <select id="getAllRegister" resultMap="RegisterResultMap" resultType="com.Ek0wraith.entity.Register">
+    <select id="getAllRegister" resultMap="RegisterResultMap" resultType="com.Ek0wraith.pojo.Register">
         SELECT
             registerNo,
             courseName,
@@ -69,12 +69,12 @@
     </delete>
 
     <!--查找会员表数据总条数-->
-    <select id="totalRegister" resultMap="RegisterSumResultMap" resultType="com.Ek0wraith.entity.Common">
+    <select id="totalRegister" resultMap="RegisterSumResultMap" resultType="com.Ek0wraith.pojo.Common">
         Select COUNT(*) as dataTotal from register
     </select>
 
     <!-- 模糊查询-->
-    <select id="getByKeywordRegister" resultMap="RegisterResultMap"  resultType="com.Ek0wraith.entity.Register">
+    <select id="getByKeywordRegister" resultMap="RegisterResultMap"  resultType="com.Ek0wraith.pojo.Register">
         SELECT
             registerNo,
             courseName,
@@ -105,7 +105,7 @@
     </select>
 
     <!-- 模糊查询查找会员表数据总条数-->
-    <select id="totalRegisterFuzzy" resultMap="RegisterSumResultMap"  resultType="com.Ek0wraith.entity.Common">
+    <select id="totalRegisterFuzzy" resultMap="RegisterSumResultMap"  resultType="com.Ek0wraith.pojo.Common">
         select COUNT(*) as dataTotal
         FROM
             register,
@@ -124,16 +124,16 @@
     </select>
 
 
-    <select id="getMemberByPhone" resultType="com.Ek0wraith.entity.Member">
+    <select id="getMemberByPhone" resultType="com.Ek0wraith.pojo.Member">
         SELECT * FROM member where memberPhone=#{memberPhone}
     </select>
 
     <!--检查是否已经选过该课程-->
-    <select id="checkRegister" resultType="com.Ek0wraith.entity.Register">
+    <select id="checkRegister" resultType="com.Ek0wraith.pojo.Register">
         select * from register where courseNo = #{courseNo} and memberNo = #{memberNo}
     </select>
 
-    <select id="getRegisterByMemberNo" resultType="com.Ek0wraith.entity.Register">
+    <select id="getRegisterByMemberNo" resultType="com.Ek0wraith.pojo.Register">
         SELECT
             registerNo,
             courseName,

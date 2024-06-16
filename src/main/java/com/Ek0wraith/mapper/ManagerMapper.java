@@ -1,20 +1,21 @@
 package com.Ek0wraith.mapper;
 
-import com.Ek0wraith.pojo.Admin;
+import com.Ek0wraith.pojo.Manager;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
- * ClassName: AdminMapper
+ * ClassName: ManagerMapper
  * Package: com.Ek0wraith.mapper
  * Description：TODO
  *
  * @Author Ek0wraith
- * @Create 2024/6/13 8:54
+ * @Create 2024/6/16 16:52
  * @Version 1.0
  */
 @Mapper
-@Repository
-public interface AdminMapper {
-    Admin getAdminPassword(String adminAccount, String adminPassword);
+public interface ManagerMapper {
+    List<Manager> getAllManager();
 }

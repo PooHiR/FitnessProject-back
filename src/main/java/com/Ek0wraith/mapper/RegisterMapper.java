@@ -1,8 +1,8 @@
 package com.Ek0wraith.mapper;
 
-import com.Ek0wraith.entity.Common;
-import com.Ek0wraith.entity.Member;
-import com.Ek0wraith.entity.Register;
+import com.Ek0wraith.pojo.Common;
+import com.Ek0wraith.pojo.Member;
+import com.Ek0wraith.pojo.Register;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

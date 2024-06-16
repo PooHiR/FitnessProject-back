@@ -5,7 +5,7 @@
 
 <mapper namespace="com.Ek0wraith.mapper.MemberMapper">
 
-    <resultMap id="MemberResultMap" type="com.Ek0wraith.entity.Member">
+    <resultMap id="MemberResultMap" type="com.Ek0wraith.pojo.Member">
         <id column="memberNo" property="memberNo" jdbcType="INTEGER"></id>
         <result column="memberUsername" property="memberUsername" jdbcType="VARCHAR"></result>
         <result column="memberPassword" property="memberPassword" jdbcType="VARCHAR"></result>
@@ -19,7 +19,7 @@
         <result column="cardNextClass" property="cardNextClass" jdbcType="INTEGER"></result>
     </resultMap>
 
-    <resultMap id="MemberSumResultMap" type="com.Ek0wraith.entity.Common">
+    <resultMap id="MemberSumResultMap" type="com.Ek0wraith.pojo.Common">
         <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
     </resultMap>
 
@@ -28,12 +28,12 @@
     </delete>
 
     <!--查找所有会员信息-->
-    <select id="getAllMember" resultMap="MemberResultMap" resultType="com.Ek0wraith.entity.Member">
+    <select id="getAllMember" resultMap="MemberResultMap" resultType="com.Ek0wraith.pojo.Member">
         select * from member limit #{page},#{size}
     </select>
 
     <!--查找所有会员信息-->
-    <select id="getAllMemberNoPage" resultMap="MemberResultMap" resultType="com.Ek0wraith.entity.Member">
+    <select id="getAllMemberNoPage" resultMap="MemberResultMap" resultType="com.Ek0wraith.pojo.Member">
         select memberNo,memberUsername,memberName,memberAge,
                memberGender,memberPhone,cardTime,memberHeight,memberWeight,cardClass,cardNextClass,memberIntegral,memberPower,memberChange
         from member
@@ -86,7 +86,7 @@
 
 
     <!--查找会员表数据总条数-->
-    <select id="totalMember" resultMap="MemberSumResultMap" resultType="com.Ek0wraith.entity.Common">
+    <select id="totalMember" resultMap="MemberSumResultMap" resultType="com.Ek0wraith.pojo.Common">
         Select COUNT(*) as dataTotal from member
     </select>
 
@@ -104,17 +104,17 @@
 
 
     <!-- 模糊查询-->
-    <select id="getByKeywordMember" resultMap="MemberResultMap"  resultType="com.Ek0wraith.entity.Member">
+    <select id="getByKeywordMember" resultMap="MemberResultMap"  resultType="com.Ek0wraith.pojo.Member">
         select * from member where memberName like concat('%',#{keyWord},'%') or memberPhone like concat('%',#{keyWord},'%') limit #{page},#{size};
     </select>
 
     <!-- 模糊查询查找会员表数据总条数-->
-    <select id="totalMemberFuzzy" resultMap="MemberSumResultMap"  resultType="com.Ek0wraith.entity.Common">
+    <select id="totalMemberFuzzy" resultMap="MemberSumResultMap"  resultType="com.Ek0wraith.pojo.Common">
         select COUNT(*) as dataTotal from member where memberName like concat('%',#{keyWord},'%') or memberPhone like concat('%',#{keyWord},'%') ;
     </select>
 
     <!--根据手机号和密码-->
-    <select id="getMemberPassword" resultType="com.Ek0wraith.entity.Member" resultMap="MemberResultMap">
+    <select id="getMemberPassword" resultType="com.Ek0wraith.pojo.Member" resultMap="MemberResultMap">
         select * from member where memberPhone = #{memberPhone} and memberPassword = #{memberPassword}
     </select>
 
@@ -144,7 +144,7 @@
         select memberPower from member where memberNo = #{memberNo}
     </select>
 
-    <select id="getMemberByMemberNo" resultType="com.Ek0wraith.entity.Member">
+    <select id="getMemberByMemberNo" resultType="com.Ek0wraith.pojo.Member">
         select * from member where memberNo = #{memberNo}
     </select>
 
@@ -161,7 +161,7 @@
                                       and cardTime &gt; DATE_FORMAT(CONCAT(#{year}, '-01-01'), '%Y-%m-%d')
                                       and cardTime &lt; DATE_FORMAT(CONCAT(#{year}, '-12-31'), '%Y-%m-%d')
     </select>
-    <select id="getMemberByPhone" resultType="com.Ek0wraith.entity.Member">
+    <select id="getMemberByPhone" resultType="com.Ek0wraith.pojo.Member">
         select * from member where memberPhone = #{memberPhone}
     </select>
 </mapper>

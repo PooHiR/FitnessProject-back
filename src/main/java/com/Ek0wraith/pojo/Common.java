@@ -1,4 +1,4 @@
-package com.Ek0wraith.entity;
+package com.Ek0wraith.pojo;
 
 import lombok.Data;
 
