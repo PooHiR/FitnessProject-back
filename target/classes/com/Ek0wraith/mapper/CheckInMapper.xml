@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.CheckInMapper">
+    <resultMap id="checkNo" type="com.Ek0wraith.pojo.CheckIn">
+        <id column="checkNo" property="checkNo" jdbcType="INTEGER"></id>
+        <result column="memberNo" property="memberNo" jdbcType="INTEGER"></result>
+        <result column="checkDate" property="checkDate" jdbcType="DATE"></result>
+    </resultMap>
+
+    <insert id="addCheckIn">
+        insert into checkIn(memberno,checkDate) values (#{memberNo}, #{checkDate})
+    </insert>
+
+    <select id="getCheckByMemberNo" resultType="com.Ek0wraith.pojo.CheckIn">
+        select * from checkIn where memberNo = #{memberNo} and checkDate = #{checkDate}
+    </select>
+
+</mapper>

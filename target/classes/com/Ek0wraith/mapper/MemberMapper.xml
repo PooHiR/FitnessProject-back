@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.MemberMapper">
+
+    <resultMap id="MemberResultMap" type="com.Ek0wraith.pojo.Member">
+        <id column="memberNo" property="memberNo" jdbcType="INTEGER"></id>
+        <result column="memberUsername" property="memberUsername" jdbcType="VARCHAR"></result>
+        <result column="memberPassword" property="memberPassword" jdbcType="VARCHAR"></result>
+        <result column="memberName" property="memberName" jdbcType="VARCHAR"></result>
+        <result column="memberAge" property="memberAge" jdbcType="INTEGER"></result>
+        <result column="memberGender" property="memberGender" jdbcType="VARCHAR"></result>
+        <result column="memberPhone" property="memberPhone" jdbcType="VARCHAR"></result>
+        <result column="cardTime" property="cardTime" jdbcType="DATE"></result>
+        <result column="memberHeight" property="memberHeight" jdbcType="DOUBLE"></result>
+        <result column="cardClass" property="cardClass" jdbcType="INTEGER"></result>
+        <result column="cardNextClass" property="cardNextClass" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <resultMap id="MemberSumResultMap" type="com.Ek0wraith.pojo.Common">
+        <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <delete id="deleteMember">
+        DELETE FROM member WHERE memberNo=#{memberNo};
+    </delete>
+
+    <!--查找所有会员信息-->
+    <select id="getAllMember" resultMap="MemberResultMap" resultType="com.Ek0wraith.pojo.Member">
+        select * from member limit #{page},#{size}
+    </select>
+
+    <!--查找所有会员信息-->
+    <select id="getAllMemberNoPage" resultMap="MemberResultMap" resultType="com.Ek0wraith.pojo.Member">
+        select memberNo,memberUsername,memberName,memberAge,
+               memberGender,memberPhone,cardTime,memberHeight,memberWeight,cardClass,cardNextClass,memberIntegral,memberPower,memberChange
+        from member
+    </select>
+
+    <!--添加会员-->
+    <insert id="addMember">
+        INSERT INTO member ( memberName,memberAge,memberUsername,memberPassword,memberGender,
+                             memberPhone,cardTime,memberHeight,memberWeight,cardClass,cardNextClass,
+                             memberIntegral,memberPower,memberChange)
+        VALUES(#{memberName},#{memberAge},#{memberUsername},#{memberPassword},#{memberGender},
+               #{memberPhone},#{cardTime},#{memberHeight},#{memberWeight},#{cardClass},#{cardNextClass},
+               #{memberIntegral},#{memberPower},#{memberChange});
+    </insert>
+
+    <!--批量添加会员-->
+    <insert id="saveMemberBatch">
+        INSERT INTO member ( memberName,memberAge,memberUsername,memberPassword,memberGender,
+        memberPhone,cardTime,memberHeight,memberWeight,cardClass,cardNextClass,
+        memberIntegral,memberPower,memberChange)
+        VALUES
+        <foreach collection ="list" item="member" separator =",">
+            (#{member.memberName},#{member.memberAge},#{member.memberUsername},#{member.memberPassword},#{member.memberGender},
+            #{member.memberPhone},#{member.cardTime},#{member.memberHeight},#{member.memberWeight},#{member.cardClass},#{member.cardNextClass},
+            #{member.memberIntegral},#{member.memberPower},#{member.memberChange})
+        </foreach >
+    </insert>
+
+    <!--修改会员信息-->
+    <update id="updateMember">
+        UPDATE member SET memberName=#{memberName},
+                          memberGender=#{memberGender},memberAge=#{memberAge},memberPhone=#{memberPhone},
+                          memberHeight=#{memberHeight},memberWeight=#{memberWeight},
+                          memberIntegral=#{memberIntegral},memberPower=#{memberPower},memberChange=#{memberChange}
+        WHERE memberNo = #{memberNo}
+    </update>
+
+    <!--用户修改信息-->
+    <update id="updateMemberByMemberNo">
+        UPDATE member SET memberName=#{memberName},
+                          memberGender=#{memberGender},memberAge=#{memberAge},memberPhone=#{memberPhone},
+                          memberHeight=#{memberHeight},memberWeight=#{memberWeight},
+                          personalizedSignature = #{personalizedSignature}
+        WHERE memberNo = #{memberNo}
+    </update>
+
+    <update id="updateMemberChange">
+        UPDATE member SET memberChange = (select SUM(rechargeMoney) from recharge where memberNo = #{memberNo}) - #{totalBuy}  WHERE memberNo = #{memberNo}
+    </update>
+
+
+    <!--查找会员表数据总条数-->
+    <select id="totalMember" resultMap="MemberSumResultMap" resultType="com.Ek0wraith.pojo.Common">
+        Select COUNT(*) as dataTotal from member
+    </select>
+
+    <!--积分购买会员-->
+    <update id="updateMemberIntegral">
+        UPDATE member SET memberIntegral =  (memberIntegral - #{price}) WHERE memberNo = #{memberNo} and (memberIntegral - #{price}) > 0
+    </update>
+
+    <!--修改用户vip权限-->
+    <update id="updateMemberPower">
+        UPDATE member SET memberPower = #{memberPower} WHERE memberNo = #{memberNo}
+    </update>
+
+
+
+
+    <!-- 模糊查询-->
+    <select id="getByKeywordMember" resultMap="MemberResultMap"  resultType="com.Ek0wraith.pojo.Member">
+        select * from member where memberName like concat('%',#{keyWord},'%') or memberPhone like concat('%',#{keyWord},'%') limit #{page},#{size};
+    </select>
+
+    <!-- 模糊查询查找会员表数据总条数-->
+    <select id="totalMemberFuzzy" resultMap="MemberSumResultMap"  resultType="com.Ek0wraith.pojo.Common">
+        select COUNT(*) as dataTotal from member where memberName like concat('%',#{keyWord},'%') or memberPhone like concat('%',#{keyWord},'%') ;
+    </select>
+
+    <!--根据手机号和密码-->
+    <select id="getMemberPassword" resultType="com.Ek0wraith.pojo.Member" resultMap="MemberResultMap">
+        select * from member where memberPhone = #{memberPhone} and memberPassword = #{memberPassword}
+    </select>
+
+
+    <update id="updateMemberPassword">
+        UPDATE member SET memberPassword = #{memberPassword} WHERE memberPhone = #{memberPhone}
+    </update>
+
+    <update id="updateMemberChangeByMemberNo">
+        UPDATE member SET memberChange =  (memberChange - #{coursePrice}) WHERE memberNo = #{memberNo} and (memberChange - #{coursePrice}) >0
+    </update>
+
+    <!--根据用户编号获得积分-->
+    <select id="getMemberIntegral" resultType="java.lang.Double">
+        select memberIntegral from member where memberNo = #{memberNo}
+    </select>
+
+    <!--根据用户编号获得余额-->
+    <select id="getMemberChange" resultType="java.lang.Double">
+        select memberChange from member where memberNo = #{memberNo}
+    </select>
+
+
+
+
+    <select id="getMemberPower" resultType="java.lang.Integer">
+        select memberPower from member where memberNo = #{memberNo}
+    </select>
+
+    <select id="getMemberByMemberNo" resultType="com.Ek0wraith.pojo.Member">
+        select * from member where memberNo = #{memberNo}
+    </select>
+
+    <select id="getTotalMoney" resultType="java.lang.Double">
+        select SUM(rechargeMoney) from recharge where memberNo = #{memberNo}
+    </select>
+
+    <select id="getMemberBySeason" resultType="java.lang.Integer">
+        select count(*) from member where cardTime &gt;= #{startTime} and cardTime &lt;=  #{endTime}
+    </select>
+    <select id="getSexByYear" resultType="java.lang.Integer">
+        select count(*) from member where
+            memberGender = #{sex}
+                                      and cardTime &gt; DATE_FORMAT(CONCAT(#{year}, '-01-01'), '%Y-%m-%d')
+                                      and cardTime &lt; DATE_FORMAT(CONCAT(#{year}, '-12-31'), '%Y-%m-%d')
+    </select>
+    <select id="getMemberByPhone" resultType="com.Ek0wraith.pojo.Member">
+        select * from member where memberPhone = #{memberPhone}
+    </select>
+</mapper>

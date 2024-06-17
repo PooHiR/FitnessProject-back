@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.AdminMapper">
+
+    <resultMap id="AdminResultMap" type="com.Ek0wraith.pojo.Admin">
+        <id column="adminNo" property="adminNo" jdbcType="INTEGER"></id>
+        <result column="adminAccount" property="adminAccount" jdbcType="VARCHAR"></result>
+        <result column="adminPassword" property="adminPassword" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <!--根据搜索用户名和密码-->
+    <select id="getAdminPassword" resultType="com.Ek0wraith.pojo.Admin" resultMap="AdminResultMap">
+        select * from admin where adminAccount = #{adminAccount} and adminPassword = #{adminPassword}
+    </select>
+
+</mapper>

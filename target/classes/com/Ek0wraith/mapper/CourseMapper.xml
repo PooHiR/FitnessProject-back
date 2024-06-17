@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.CourseMapper">
+    <resultMap id="CourseResultMap" type="com.Ek0wraith.pojo.Course">
+        <id column="courseNo" property="courseNo" jdbcType="INTEGER"></id>
+        <result column="courseName" property="courseName" jdbcType="VARCHAR"></result>
+        <result column="courseTime" property="courseTime" jdbcType="DATE"></result>
+        <result column="courseDuration" property="courseDuration" jdbcType="VARCHAR"></result>
+        <result column="employeeNo" property="employeeNo" jdbcType="INTEGER"></result>
+        <result column="managerNo" property="managerNo" jdbcType="INTEGER"></result>
+        <result column="coursePrice" property="coursePrice" jdbcType="DECIMAL"></result>
+        <result column="courseIntegral" property="courseIntegral" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <resultMap id="CourseSumResultMap" type="com.Ek0wraith.pojo.Common">
+        <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <delete id="deleteCourse">
+        delete from course where courseNo = #{courseNo}
+    </delete>
+
+    <!--查找所有课程信息-->
+    <select id="getAllCourse" resultMap="CourseResultMap" resultType="com.Ek0wraith.pojo.Course">
+        SELECT
+            courseNo,
+            courseName,
+            courseTime,
+            courseDuration,
+            courseIntegral,
+            coursePrice,
+            courseDesc,
+            manager.managerNo managerNo,
+            a.employeeName employeeNameCoach,
+            a.employeeNo employeeNo,
+            a.employeePhone employeePhoneCoach,
+            b.employeeName employeeNameManager,
+            b.employeePhone employeePhoneManager
+        FROM
+            course
+                INNER JOIN employee a ON course.employeeNo = a.employeeNo
+                INNER JOIN manager ON course.managerNo = manager.managerNo
+                INNER JOIN employee b ON manager.employeeNo = b.employeeNo
+        order by courseNo
+            limit #{page},#{size}
+    </select>
+
+    <!--添加会员-->
+    <insert id="addCourse">
+        INSERT INTO course ( courseName,courseTime,courseDuration,employeeNo,managerNo,courseIntegral,coursePrice,courseDesc)
+        VALUES(#{courseName},#{courseTime},#{courseDuration},#{employeeNo},#{managerNo},#{courseIntegral},#{coursePrice},#{courseDesc})
+    </insert>
+
+    <!--修改会员信息-->
+    <update id="updateCourse">
+        UPDATE course SET courseName=#{courseName},courseTime=#{courseTime},courseDuration=#{courseDuration},
+                          courseIntegral =#{courseIntegral},coursePrice = #{coursePrice},coursePrice = #{coursePrice},
+                          employeeNo=#{employeeNo},managerNo=#{managerNo}
+        WHERE courseNo = #{courseNo}
+    </update>
+
+    <!--查找会员表数据总条数-->
+    <select id="totalCourse" resultMap="CourseSumResultMap" resultType="com.Ek0wraith.pojo.Common">
+        Select COUNT(*) as dataTotal from course
+    </select>
+
+    <!-- 模糊查询-->
+    <select id="getByKeywordCourse" resultMap="CourseResultMap"  resultType="com.Ek0wraith.pojo.Course">
+        select courseNo,
+               courseName,
+               courseTime,
+               courseDuration,
+               courseIntegral,
+               coursePrice,
+               courseDesc,
+               manager.managerNo managerNo,
+               a.employeeName employeeNameCoach,
+               a.employeeNo employeeNo,
+               a.employeePhone employeePhoneCoach,
+               b.employeeName employeeNameManager,
+               b.employeePhone employeePhoneManager
+        from course
+                 INNER JOIN employee a ON course.employeeNo = a.employeeNo
+                 INNER JOIN manager ON course.managerNo = manager.managerNo
+                 INNER JOIN employee b ON manager.employeeNo = b.employeeNo
+        where course.employeeNo = a.employeeNo
+          and (courseName like concat('%',#{keyWord},'%')
+            or courseDuration like concat('%',#{keyWord},'%')
+            or courseDesc like concat('%',#{keyWord},'%')
+            or a.employeeName like concat('%',#{keyWord},'%'))
+            limit #{page},#{size};
+    </select>
+
+    <!-- 模糊查询查找会员表数据总条数-->
+    <select id="totalCourseFuzzy" resultMap="CourseSumResultMap"  resultType="com.Ek0wraith.pojo.Common">
+        select COUNT(*) as dataTotal from course
+                                              INNER JOIN employee a ON course.employeeNo = a.employeeNo
+                                              INNER JOIN manager ON course.managerNo = manager.managerNo
+        where course.employeeNo = a.employeeNo
+          and (courseName like concat('%',#{keyWord},'%')
+            or courseDuration like concat('%',#{keyWord},'%')
+            or a.employeeName like concat('%',#{keyWord},'%'))
+    </select>
+
+    <select id="getAllCourseRegister" resultType="com.Ek0wraith.pojo.Course">
+        select * from course
+    </select>
+
+    <select id="getCoursePriceByCourseNo" resultType="java.lang.Double">
+        SELECT
+            coursePrice
+        FROM
+            course
+        WHERE
+            courseNo = #{courseNo}
+    </select>
+
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.EmployeeMapper">
+    <resultMap id="EmployeeResultMap" type="com.Ek0wraith.pojo.Employee">
+        <id column="employeeNo" property="employeeNo" jdbcType="INTEGER"></id>
+        <result column="employeeName" property="employeeName" jdbcType="VARCHAR"></result>
+        <result column="employeeAge" property="employeeAge" jdbcType="INTEGER"></result>
+        <result column="employeePhone" property="employeePhone" jdbcType="VARCHAR"></result>
+        <result column="employeeTime" property="employeeTime" jdbcType="DATE"></result>
+        <result column="employeeJob" property="employeeJob" jdbcType="VARCHAR"></result>
+        <result column="employeeMessage" property="employeeMessage" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <resultMap id="EmployeeSumResultMap" type="com.Ek0wraith.pojo.Common">
+        <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
+    </resultMap>
+
+
+
+    <!--查找所有员工信息-->
+    <select id="getAllEmployee" resultMap="EmployeeResultMap" resultType="com.Ek0wraith.pojo.Employee">
+        select * from employee limit #{page},#{size}
+    </select>
+
+    <!--添加员工-->
+    <insert id="addEmployee">
+        INSERT INTO employee ( employeeName,employeeGender,employeeAge,employeePhone,employeeTime,employeeJob,employeeMessage)
+        VALUES(#{employeeName},#{employeeGender},#{employeeAge},#{employeePhone},#{employeeTime},#{employeeJob},#{employeeMessage});
+    </insert>
+
+    <!--修改员工信息-->
+    <update id="updateEmployee">
+        UPDATE employee SET employeeName=#{employeeName},employeeGender=#{employeeGender},employeeAge=#{employeeAge},employeePhone=#{employeePhone},
+                            employeeJob=#{employeeJob},employeeMessage=#{employeeMessage}
+        WHERE employeeNo = #{employeeNo}
+    </update>
+
+    <!--删除员工表信息-->
+    <delete id="deleteEmployee">
+        DELETE FROM employee WHERE employeeNo=#{employeeNo};
+    </delete>
+
+    <!--查找会员表数据总条数-->
+    <select id="totalEmployee" resultMap="EmployeeSumResultMap" resultType="com.Ek0wraith.pojo.Common">
+        Select COUNT(*) as dataTotal from employee
+    </select>
+
+    <!-- 模糊查询-->
+    <select id="getByKeywordEmployee" resultMap="EmployeeResultMap"  resultType="com.Ek0wraith.pojo.Employee">
+        select * from employee where employeeJob like concat('%',#{keyWord},'%') or employeeName like concat('%',#{keyWord},'%') limit #{page},#{size};
+    </select>
+
+    <!-- 模糊查询查找会员表数据总条数-->
+    <select id="totalEmployeeFuzzy" resultMap="EmployeeSumResultMap"  resultType="com.Ek0wraith.pojo.Common">
+        select COUNT(*) as dataTotal from employee where employeeJob like concat('%',#{keyWord},'%') or employeeName like concat('%',#{keyWord},'%') ;
+    </select>
+
+    <!--查找所有教练信息-->
+    <select id="getAllCoach" resultMap="EmployeeResultMap" resultType="com.Ek0wraith.pojo.Employee">
+        select * from employee where employeeJob = 1
+    </select>
+
+    <!--查找所有经理信息-->
+    <select id="getAllManager" resultMap="EmployeeResultMap" resultType="com.Ek0wraith.pojo.Employee">
+        select * from employee where employeeJob = 4
+    </select>
+
+</mapper>

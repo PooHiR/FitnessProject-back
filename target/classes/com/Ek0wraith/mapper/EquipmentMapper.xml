@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.EquipmentMapper">
+
+    <resultMap id="EquipmentResultMap" type="com.Ek0wraith.pojo.Equipment">
+        <id column="equipmentNo" property="equipmentNo" jdbcType="INTEGER"></id>
+        <result column="equipmentName" property="equipmentName" jdbcType="VARCHAR"></result>
+        <result column="equipmentLocation" property="equipmentLocation" jdbcType="VARCHAR"></result>
+        <result column="equipmentState" property="equipmentState" jdbcType="INTEGER"></result>
+        <result column="equipmentMessage" property="equipmentMessage" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <resultMap id="EquipmentSumResultMap" type="com.Ek0wraith.pojo.Common">
+        <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <!--查找所有器材信息-->
+    <select id="getAllEquipment" resultMap="EquipmentResultMap" resultType="com.Ek0wraith.pojo.Equipment">
+        select * from equipment limit #{page},#{size}
+    </select>
+
+    <!--添加器材-->
+    <insert id="addEquipment">
+        INSERT INTO equipment ( equipmentName,equipmentLocation,equipmentState,equipmentMessage)
+        VALUES(#{equipmentName},#{equipmentLocation},#{equipmentState},#{equipmentMessage});
+    </insert>
+
+    <!--修改器材信息-->
+    <update id="updateEquipment">
+        UPDATE equipment SET equipmentName=#{equipmentName},equipmentLocation=#{equipmentLocation},equipmentState=#{equipmentState},equipmentMessage=#{equipmentMessage}
+        WHERE equipmentNo = #{equipmentNo}
+    </update>
+
+    <!--删除器材表信息-->
+    <delete id="deleteEquipment">
+        DELETE FROM equipment WHERE equipmentNo=#{equipmentNo};
+    </delete>
+
+    <!--查找会员表数据总条数-->
+    <select id="totalEquipment" resultMap="EquipmentSumResultMap" resultType="com.Ek0wraith.pojo.Common">
+        Select COUNT(*) as dataTotal from equipment
+    </select>
+
+    <!-- 模糊查询-->
+    <select id="getByKeywordEquipment" resultMap="EquipmentResultMap"  resultType="com.Ek0wraith.pojo.Equipment">
+        select * from equipment
+        where equipmentName like concat('%',#{keyWord},'%')
+           or equipmentLocation like concat('%',#{keyWord},'%')
+           or equipmentState like concat('%',#{keyWord},'%')
+           or equipmentMessage like concat('%',#{keyWord},'%')
+            limit #{page},#{size};
+    </select>
+
+    <!-- 模糊查询查找会员表数据总条数-->
+    <select id="totalEquipmentFuzzy" resultMap="EquipmentSumResultMap"  resultType="com.Ek0wraith.pojo.Common">
+        select COUNT(*) as dataTotal from equipment
+        where equipmentName like concat('%',#{keyWord},'%')
+           or equipmentLocation like concat('%',#{keyWord},'%')
+           or equipmentState like concat('%',#{keyWord},'%')
+           or equipmentMessage like concat('%',#{keyWord},'%') ;
+    </select>
+</mapper>
