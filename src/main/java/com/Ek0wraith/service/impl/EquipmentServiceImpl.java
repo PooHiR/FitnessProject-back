@@ -5,6 +5,7 @@ import com.Ek0wraith.pojo.Common;
 import com.Ek0wraith.pojo.Equipment;
 import com.Ek0wraith.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @Create 2024/6/16 16:34
  * @Version 1.0
  */
+@Service
 public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private EquipmentMapper equipmentMapper;

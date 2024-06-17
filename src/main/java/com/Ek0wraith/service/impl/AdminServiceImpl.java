@@ -5,6 +5,7 @@ import com.Ek0wraith.mapper.AdminMapper;
 import com.Ek0wraith.service.AdminService;
 import com.Ek0wraith.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @Create 2024/6/13 17:31
  * @Version 1.0
  */
+@Service
 public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminMapper adminMapper;

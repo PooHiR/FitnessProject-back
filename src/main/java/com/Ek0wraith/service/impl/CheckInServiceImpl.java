@@ -5,6 +5,7 @@ import com.Ek0wraith.mapper.CheckInMapper;
 import com.Ek0wraith.mapper.MemberMapper;
 import com.Ek0wraith.service.CheckInService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @Create 2024/6/14 13:27
  * @Version 1.0
  */
+@Service
 public class CheckInServiceImpl implements CheckInService {
     @Autowired
     private CheckInMapper checkInMapper;

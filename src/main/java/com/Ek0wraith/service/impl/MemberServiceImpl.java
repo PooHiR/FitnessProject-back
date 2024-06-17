@@ -7,6 +7,7 @@ import com.Ek0wraith.mapper.RegisterMapper;
 import com.Ek0wraith.service.MemberService;
 import com.Ek0wraith.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ import java.util.*;
  * @Create 2024/6/13 17:49
  * @Version 1.0
  */
-
+@Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberMapper memberMapper;

@@ -16,7 +16,6 @@ import java.util.Map;
  * @Create 2024/6/13 11:01
  * @Version 1.0
  */
-@Service
 public interface MemberService {
     public List<Member> getMemberMapper(int page, int size);
     public List<Member> getAllMemberNoPage();

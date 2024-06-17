@@ -14,7 +14,6 @@ import java.util.Map;
  * @Create 2024/6/14 11:56
  * @Version 1.0
  */
-@Service
 public interface CheckInService {
     public Map<String,Object> addCheckIn(CheckIn checkIn);
 }

@@ -18,7 +18,6 @@ import java.util.Map;
  * @Create 2024/6/14 14:16
  * @Version 1.0
  */
-@Service
 public interface CourseService {
     public List<Course> getAllCourse(int page,int size);
     public List<Course> getAllCourseRegister();

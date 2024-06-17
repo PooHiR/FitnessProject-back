@@ -5,6 +5,7 @@ import com.Ek0wraith.pojo.Common;
 import com.Ek0wraith.pojo.Employee;
 import com.Ek0wraith.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @Create 2024/6/16 11:05
  * @Version 1.0
  */
+@Service
 public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private EmployeeMapper employeeMapper;

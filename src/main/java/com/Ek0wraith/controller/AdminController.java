@@ -23,7 +23,6 @@ import java.util.Map;
 @RestController
 public class AdminController {
 
-
     @Autowired
     private AdminService adminService;
 

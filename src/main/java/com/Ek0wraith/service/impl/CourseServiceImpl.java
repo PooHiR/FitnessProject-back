@@ -5,6 +5,7 @@ import com.Ek0wraith.pojo.Common;
 import com.Ek0wraith.pojo.Course;
 import com.Ek0wraith.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @Create 2024/6/14 14:24
  * @Version 1.0
  */
+@Service
 public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseMapper courseMapper;

@@ -16,7 +16,6 @@ import java.util.Map;
  * @Create 2024/6/16 11:02
  * @Version 1.0
  */
-@Service
 public interface EmployeeService {
     public List<Employee> getAllEmployee(int page,int size);
     public Map<String, Object> addEmployee(Employee employee);

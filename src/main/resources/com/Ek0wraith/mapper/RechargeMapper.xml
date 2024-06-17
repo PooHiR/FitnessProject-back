@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Ek0wraith.mapper.RechargeMapper">
+    <resultMap id="RechargeResultMap" type="com.Ek0wraith.pojo.Recharge">
+        <id column="rechargeNo" property="rechargeNo" jdbcType="INTEGER"></id>
+        <result column="rechargeDate" property="rechargeDate" jdbcType="DATE"></result>
+        <result column="rechargeMoney" property="rechargeMoney" jdbcType="DOUBLE"></result>
+        <result column="rechargeMethod" property="rechargeMethod" jdbcType="VARCHAR"></result>
+        <result column="rechargeStatus" property="rechargeStatus" jdbcType="INTEGER"></result>
+        <result column="memberNo" property="memberNo" jdbcType="INTEGER"></result>
+    </resultMap>
+
+
+    <!--<resultMap id="RechargeSumResultMap" type="com.gym.entity.Common">
+        <result column="dataTotal" property="dataTotal" jdbcType="INTEGER"></result>
+    </resultMap>-->
+
+
+    <!--查找单个会员充值信息-->
+    <select id="getRechargeByMemberNo" resultMap="RechargeResultMap" resultType="com.Ek0wraith.pojo.Recharge">
+        select * from recharge where memberNo = #{memberNo}
+    </select>
+
+    <insert id="addRechargeByMemberNo">
+        insert into recharge(rechargeDate ,rechargeMethod,rechargeMoney,rechargeStatus,memberNo)
+        VALUES (#{rechargeDate},#{rechargeMethod},#{rechargeMoney},#{rechargeStatus},#{memberNo})
+    </insert>
+
+    <!--添加会员-->
+    <insert id="addMember">
+        INSERT INTO recharge ( memberName,memberAge,memberUsername,memberPassword,memberGender,
+                               memberPhone,cardTime,memberHeight,memberWeight,cardClass,cardNextClass)
+        VALUES(#{memberName},#{memberAge},#{memberUsername},#{memberPassword},#{memberGender},
+               #{memberPhone},#{cardTime},#{memberHeight},#{memberWeight},#{cardClass},#{cardNextClass});
+    </insert>
+
+
+</mapper>

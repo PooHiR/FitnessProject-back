@@ -14,7 +14,6 @@ import java.util.List;
  * @Create 2024/6/16 16:54
  * @Version 1.0
  */
-@Service
 public interface ManagerService {
     public List<Manager> getAllManager();
 }

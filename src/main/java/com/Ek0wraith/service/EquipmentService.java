@@ -16,7 +16,6 @@ import java.util.Map;
  * @Create 2024/6/16 16:32
  * @Version 1.0
  */
-@Service
 public interface EquipmentService {
     public List<Equipment> getAllEquipment(int page, int size);
     public Map<String,Object> addEquipment(Equipment equipment);
