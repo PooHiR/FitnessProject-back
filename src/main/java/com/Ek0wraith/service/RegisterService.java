@@ -1,5 +1,6 @@
 package com.Ek0wraith.service;
 
+import com.Ek0wraith.pojo.Common;
 import com.Ek0wraith.pojo.Register;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public interface RegisterService {
     public Map<String,Object> addRegister(Register register);
     public Map<String,Object>  updateRegister(Register register);
     public Map<String,Object>  deleteRegister(int registerNo);
+    List<Register> getByKeywordRegister(String keyWord, int page, int size);
 
+    public Common totalRegisterFuzzy(String keyWord);
 
+    public Common totalRegister();
 }
