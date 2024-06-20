@@ -32,14 +32,15 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private CourseMapper courseMapper;
 
+    @Override
     public List<Register> getAllRegister(int page,int size){
         return registerMapper.getAllRegister(page,size);
     }
-
+    @Override
     public List<Register> getRegisterByMemberNo(int memberNo){
         return registerMapper.getRegisterByMemberNo(memberNo);
     }
-
+    @Override
     public Map<String,Object> addRegister(Register register){
         Map<String,Object> resultMap = new HashMap<>();
 
@@ -81,7 +82,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
         return resultMap;
     }
-
+    @Override
     public Map<String,Object>  updateRegister(Register register) {
         Map<String,Object> resultMap = new HashMap<>();
         int result =  registerMapper.updateRegister(register);
@@ -96,7 +97,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         return resultMap;
     }
-
+    @Override
     public Map<String,Object>  deleteRegister(int registerNo) {
         Map<String,Object> resultMap = new HashMap<>();
         int result =  registerMapper.deleteRegister(registerNo);
@@ -111,12 +112,15 @@ public class RegisterServiceImpl implements RegisterService {
 
         return resultMap;
     }
+    @Override
     public Common totalRegister() {
         return registerMapper.totalRegister();
     }
+    @Override
     public List<Register> getByKeywordRegister(String keyWord,int page,int size) {
         return  registerMapper.getByKeywordRegister(keyWord,page,size);
     }
+    @Override
     public Common totalRegisterFuzzy(String keyWord){
         return registerMapper.totalRegisterFuzzy(keyWord);
     }

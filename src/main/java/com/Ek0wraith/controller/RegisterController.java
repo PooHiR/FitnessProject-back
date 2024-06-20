@@ -6,6 +6,7 @@ import com.Ek0wraith.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Map;
  * @Create 2024/6/16 16:58
  * @Version 1.0
  */
-@Controller
+@RestController
 public class RegisterController {
     @Autowired
     private RegisterService registerService;

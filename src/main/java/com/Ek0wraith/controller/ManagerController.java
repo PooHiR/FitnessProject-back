@@ -5,6 +5,7 @@ import com.Ek0wraith.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * @Create 2024/6/16 16:56
  * @Version 1.0
  */
-@Controller
+@RestController
 public class ManagerController {
     @Autowired
     private ManagerService managerService;

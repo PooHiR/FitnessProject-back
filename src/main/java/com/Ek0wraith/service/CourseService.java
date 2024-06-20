@@ -21,7 +21,7 @@ import java.util.Map;
 public interface CourseService {
     public List<Course> getAllCourse(int page,int size);
     public List<Course> getAllCourseRegister();
-    public double getCoursePrisePriceByCourseNo(int courseNo);
+    public double getCoursePriseByCourseNo(int courseNo);
     public Map<String,Object> addCourse(Course course);
     public Map<String,Object> updateCourse(Course employee);
     public Map<String,Object> deleteCourse(int courseNo);
