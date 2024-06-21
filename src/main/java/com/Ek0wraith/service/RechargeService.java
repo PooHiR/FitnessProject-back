@@ -1,6 +1,7 @@
 package com.Ek0wraith.service;
 
 import com.Ek0wraith.pojo.Common;
+import com.Ek0wraith.pojo.Recharge;
 import com.Ek0wraith.pojo.Register;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,6 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface RechargeService {
-    public List<Register> getAllRegister(int page, int size);
-    public List<Register> getRegisterByMemberNo(int memberNo);
-    public Map<String,Object> addRegister(Register register);
-    public Map<String,Object>  updateRegister(Register register);
-    public Map<String,Object>  deleteRegister(int registerNo);
-    public Common totalRegister();
-    public List<Register> getByKeywordRegister(String keyWord,int page,int size);
-    public Common totalRegisterFuzzy(String keyWord);
+    public List<Recharge> getRechargeByMemberNo(int memberNo);
+    public Map<String,Object> addRechargeByMemberNo(Recharge recharge);
 }
