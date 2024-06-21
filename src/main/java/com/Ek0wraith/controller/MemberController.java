@@ -53,7 +53,7 @@ public class MemberController {
      **/
     @RequestMapping(path = "/addMember")
     public Map<String,Object> addMember(Member member){
-        return addMember(member);
+        return memberService.addMember(member);
     }
     
     /**
